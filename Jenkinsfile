@@ -1,6 +1,7 @@
 pipeline {
 agent any
 
+```
 stages {
     stage('Checkout') {
         steps {
@@ -10,10 +11,8 @@ stages {
 
     stage('Install Dependencies') {
         steps {
-            bat 
-                if not exist .venv python -m venv .venv
-                .venv\\Scripts\\python.exe -m pip install --disable-pip-version-check --retries 5 --timeout 120 -r requirements.txt
-            
+            bat 'if not exist .venv\\Scripts\\python.exe python -m venv .venv'
+            bat '.venv\\Scripts\\python.exe -m pip install --disable-pip-version-check --retries 5 --timeout 120 -r requirements.txt'
         }
     }
 
@@ -31,11 +30,9 @@ stages {
 
     stage('Package Release') {
         steps {
-            bat 
-                if not exist release mkdir release
-                copy /Y app.py release\\app.py
-                copy /Y requirements.txt release\\requirements.txt
-            
+            bat 'if not exist release mkdir release'
+            bat 'copy /Y app.py release\\app.py'
+            bat 'copy /Y requirements.txt release\\requirements.txt'
         }
     }
 }
@@ -48,6 +45,6 @@ post {
         echo 'FAILED: Check Console Output.'
     }
 }
-
+```
 
 }
